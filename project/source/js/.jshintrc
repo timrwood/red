@@ -17,7 +17,7 @@
 	"globalstrict": false,
 	"asi": false,
 	"laxbreak": false,
-	"bitwise": true,
+	"bitwise": false,
 	"boss": false,
 	"curly": true,
 	"eqeqeq": true,

@@ -8,10 +8,95 @@
 // 	- Sass
 // 	- Compass
 
-html {}
-
+html,
 body {
-	@extend %debug !optional;
+	overflow: hidden;
 }
 
-a {}
+@mixin logo($w) {
+	$h : $w * 0.34132;
+
+	#logo {
+		width: $w;
+		height: $h;
+		margin-top: -$h/2;
+		margin-left: -$w/2;
+	}
+}
+
+canvas {
+	background: blue;
+}
+
+#logo {
+	top: 50%;
+	left: 50%;
+	position: fixed;
+
+	svg,
+	canvas {
+		@extend %position-zero;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+#background {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
+
+	canvas {
+		@extend %position-zero;
+		width: 100%;
+		height: 100%;
+	}
+}
+
+@include logo(200px);
+
+@for $i from 3 through 12 {
+	@media only screen and (min-width : $i * 100px) {
+		@include logo(($i - 1) * 100px);
+	}
+}
+
+.if-bg,
+.if-fg {
+	display: none;
+}
+.is-bg .if-bg,
+.is-fg .if-fg {
+	display: block;
+}
+.fg-red .fg-color,
+.bg-red .bg-color {
+	fill: red;
+	background: red;
+}
+.fg-white .fg-color,
+.bg-white .bg-color {
+	fill: white;
+	background: white;
+}
+.fg-black .fg-color,
+.bg-black .bg-color {
+	fill: black;
+	background: black;
+}
+
+// debugging
+.fg-red canvas,
+.bg-red canvas {
+	@include grad(black, white);
+}
+.fg-white canvas,
+.bg-white canvas {
+	@include grad(black, red);
+}
+.fg-black canvas,
+.bg-black canvas {
+	@include grad(red, white);
+}

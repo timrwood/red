@@ -1,41 +1,35 @@
-define(
+define(function (require) {
 
-	[
-		"rosy/base/Class",
-		"rosy/views/ViewManager",
-		"./config/routes"
-	],
+	"use strict";
 
-	function (Class, ViewManager, routes) {
+	var $ = require('$'),
+		COLORS = ['red', 'black', 'white'];
 
-		"use strict";
+	return require("rosy/base/Class").extend({
+		init : function () {
+			$(window).click(this.change).click();
+		},
 
-		var Site = Class.extend({
+		colorPhase : -1,
+		isForeground : false,
+		change : function () {
+			var classes = "",
+				primary, secondary, tertiary;
 
-			initialized : false,
+			this.colorPhase = (this.colorPhase + 1) % 6;
 
-			initialize : function () {
+			primary = 2 - (this.colorPhase % 3);
+			secondary = ~~(this.colorPhase / 2);
+			tertiary = ~~(((this.colorPhase + 3) % 6) / 2);
 
-				if (!this.initialized) {
+			console.log(primary, secondary, tertiary, primary + secondary + tertiary, this.colorPhase);
 
-					ViewManager.initialize({
-						// fallbackMode			:	hard|soft|hash,
-						// selectors			:	Array,
-						// bubble				:	true|false,
-						// container			:	String|DOMElement,
-						// defaultRoute			:	String,
-						// activeClass			:	String,
-						// disabledClass		:	String,
-						// TransitionManager	:	Class,
-						aliases : routes.aliases,
-						viewGroups : routes.viewGroups
-					});
+			this.isForeground = !this.isForeground;
+			classes += this.isForeground ? 'is-fg bg-' : 'is-bg fg-';
 
-					this.initialized = true;
-				}
-			}
-		});
+			classes += COLORS[primary];
 
-		return new Site();
-	}
-);
+			$('body').removeClass().addClass(classes);
+		}
+	});
+});
