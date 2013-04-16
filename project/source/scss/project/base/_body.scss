@@ -24,10 +24,6 @@ body {
 	}
 }
 
-canvas {
-	background: blue;
-}
-
 #logo {
 	top: 50%;
 	left: 50%;
@@ -85,18 +81,4 @@ canvas {
 .bg-black .bg-color {
 	fill: black;
 	background: black;
-}
-
-// debugging
-.fg-red canvas,
-.bg-red canvas {
-	@include grad(black, white);
-}
-.fg-white canvas,
-.bg-white canvas {
-	@include grad(black, red);
-}
-.fg-black canvas,
-.bg-black canvas {
-	@include grad(red, white);
 }
