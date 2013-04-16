@@ -9,7 +9,7 @@ define(function (require) {
 		ImageData = require("../images/ImageData"),
 		color = require("../Color"),
 		vec4 = require("../math/vec4"),
-		SRC = '/project/static/img/test.jpg';
+		SRC = '/project/static/img/tesla.jpg';
 
 	function Triangle(x, y, radius, isUp) {
 		this.x = x;
@@ -147,8 +147,15 @@ define(function (require) {
 			this.image.rebuild();
 		},
 
-		draw : function () {
-			var tri = initial.splitAt(this.randX(), this.randY());
+		drawAtPercent : function (p) {
+			var i;
+			for (i = 0; i < 10; i++) {
+				this.splitTriangles();
+			}
+		},
+
+		splitTriangles : function () {
+			var tri = initial.splitAt(this.randXCenter(), this.randYCenter());
 			if (tri) {
 				this.drawTriangles(tri);
 			}
@@ -181,7 +188,7 @@ define(function (require) {
 			vec4.lerp(this.triangleColor, this.triangleColor, this.image.getPixelClamped(l[0], l[1]), 1 / 2);
 			vec4.lerp(this.triangleColor, this.triangleColor, this.image.getPixelClamped(r[0], r[1]), 1 / 3);
 			vec4.lerp(this.triangleColor, this.triangleColor, this.image.getPixelClamped(x, y), 1 / 4);
-			return color.hex.apply(color, this.triangleColor);
+			return this.gradientMapHex(this.triangleColor);
 		},
 
 		removeTriangles : function () {

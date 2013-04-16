@@ -6,12 +6,13 @@ define(function (require) {
 		proxy = 'createImageData createLinearGradient createPattern createRadialGradient getImageData getLineDash isPointInPath isPointInStroke measureText'.split(' '),
 		proxyChainable = 'arc arcTo beginPath bezierCurveTo clearRect clearShadow clip closePath drawImage drawImageFromRect fill fillRect fillText lineTo moveTo putImageData quadraticCurveTo rect restore rotate save scale setLineDash setTransform stroke strokeRect strokeText transform translate'.split(' '),
 		methods, i,
-		color = require("./Color");
+		color = require("./Color"),
+		vec4 = require("./math/vec4");
 
 	methods = {
 		init : function () {
-			this.primary = [0, 0, 0, 0];
-			this.secondary = [0, 0, 0, 0];
+			this.primary = vec4.create();
+			this.secondary = vec4.create();
 		},
 
 		destroy : function () {
@@ -27,12 +28,13 @@ define(function (require) {
 
 		primary : null,
 		secondary : null,
+
 		primaryHex : function () {
-			return color.hex(this.primary[0], this.primary[1], this.primary[2]);
+			return color.hex.apply(color, this.primary);
 		},
 
 		secondaryHex : function () {
-			return color.hex(this.secondary[0], this.secondary[1], this.secondary[2]);
+			return color.hex.apply(color, this.secondary);
 		},
 
 		primaryRgba : function (alpha) {
@@ -41,6 +43,27 @@ define(function (require) {
 
 		secondaryRgba : function (alpha) {
 			return color.rgba(this.secondary[0], this.secondary[1], this.secondary[2], alpha);
+		},
+
+		gradientMap : function (c) {
+			var primaryLength = vec4.sqrLen(this.primary),
+				secondaryLength = vec4.sqrLen(this.secondary),
+				light = this.primary,
+				dark = this.secondary,
+				percent;
+
+			percent = (c[0] + c[1] + c[2]) / (256 * 3);
+
+			if (primaryLength > secondaryLength) {
+				light = this.secondary;
+				dark = this.primary;
+			}
+
+			return vec4.lerp([], light, dark, percent);
+		},
+
+		gradientMapHex : function (c) {
+			return color.hex.apply(color, this.gradientMap(c));
 		},
 
 		/*******************************
@@ -61,6 +84,18 @@ define(function (require) {
 
 		randY : function () {
 			return Math.random() * this.height;
+		},
+
+		randXCenter : function () {
+			var r = ((Math.random() * 2) - 1) * Math.random(),
+				half = this.width / 2;
+			return half + (half * r);
+		},
+
+		randYCenter : function () {
+			var r = ((Math.random() * 2) - 1) * Math.random(),
+				half = this.height / 2;
+			return half + (half * r);
 		},
 
 		/*******************************

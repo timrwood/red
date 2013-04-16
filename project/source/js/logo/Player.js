@@ -10,10 +10,10 @@ define(function (require) {
 			[0, 0, 0],
 			[255, 255, 255]
 		],
-		ANIMATION_TIME = 10000,
+		ANIMATION_TIME = 3000,
 		canvases = require("./CanvasList"),
 
-		DEBUG = !true;
+		DEBUG = false;
 
 	return require("rosy/base/Class").extend({
 		init : function () {
