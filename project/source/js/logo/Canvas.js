@@ -7,7 +7,11 @@ define(function (require) {
 		proxyChainable = 'arc arcTo beginPath bezierCurveTo clearRect clearShadow clip closePath drawImage drawImageFromRect fill fillRect fillText lineTo moveTo putImageData quadraticCurveTo rect restore rotate save scale setLineDash setTransform stroke strokeRect strokeText transform translate'.split(' '),
 		methods, i,
 		color = require("./Color"),
-		vec4 = require("./math/vec4");
+		vec4 = require("./math/vec4"),
+
+		RED = vec4.fromValues(255, 0, 0, 0),
+		WHITE = vec4.fromValues(255, 255, 255, 0),
+		BLACK = vec4.fromValues(0, 0, 0, 0);
 
 	methods = {
 		init : function () {
@@ -64,6 +68,18 @@ define(function (require) {
 
 		gradientMapHex : function (c) {
 			return color.hex.apply(color, this.gradientMap(c));
+		},
+
+		gradientMap3 : function (c) {
+			var percent = (c[0] + c[1] + c[2]) / (256 * 3);
+			if (percent > 0.5) {
+				return vec4.lerp([], RED, WHITE, (percent - 0.5) * 2);
+			}
+			return vec4.lerp([], BLACK, RED, percent * 2);
+		},
+
+		gradientMap3Hex : function (c) {
+			return color.hex.apply(color, this.gradientMap3(c));
 		},
 
 		/*******************************

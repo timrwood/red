@@ -22,22 +22,22 @@ define(function (require) {
 	Triangle.prototype = {
 		center : function () {
 			return [
-				~~(this.x),
-				~~(this.y + this.up * this.r)
+				(this.x),
+				(this.y + this.up * this.r)
 			];
 		},
 
 		right : function () {
 			return [
-				~~(this.x + this.r * COS_60),
-				~~(this.y - this.up * this.r * 0.5)
+				(this.x + this.r * COS_60),
+				(this.y - this.up * this.r * 0.5)
 			];
 		},
 
 		left : function () {
 			return [
-				~~(this.x - this.r * COS_60),
-				~~(this.y - this.up * this.r * 0.5)
+				(this.x - this.r * COS_60),
+				(this.y - this.up * this.r * 0.5)
 			];
 		},
 
@@ -147,7 +147,7 @@ define(function (require) {
 			this.image.rebuild();
 		},
 
-		drawAtPercent : function (p) {
+		drawAtTime : function (t) {
 			var i;
 			for (i = 0; i < 5; i++) {
 				this.splitTriangles();
@@ -155,7 +155,7 @@ define(function (require) {
 		},
 
 		splitTriangles : function () {
-			var tri = initial.splitAt(this.randXCenter(), this.randYCenter());
+			var tri = initial.splitAt(this.randXCenter(), this.randY());
 			if (tri) {
 				this.drawTriangles(tri);
 			}
@@ -176,10 +176,10 @@ define(function (require) {
 				l = tri.left(),
 				r = tri.right();
 			this.beginPath().fillStyle(this.getTriangleHex(c, l, r, tri.x, tri.y)).strokeStyle(this.secondaryHex())
-				.moveTo(~~c[0] + 0.5, ~~c[1] + 0.5)
-				.lineTo(~~l[0] + 0.5, ~~l[1] + 0.5)
-				.lineTo(~~r[0] + 0.5, ~~r[1] + 0.5)
-				.lineTo(~~c[0] + 0.5, ~~c[1] + 0.5)
+				.moveTo(c[0], c[1])
+				.lineTo(l[0], l[1])
+				.lineTo(r[0], r[1])
+				.lineTo(c[0], c[1])
 				.fill();
 		},
 
