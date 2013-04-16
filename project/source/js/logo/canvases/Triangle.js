@@ -149,7 +149,7 @@ define(function (require) {
 
 		drawAtPercent : function (p) {
 			var i;
-			for (i = 0; i < 10; i++) {
+			for (i = 0; i < 5; i++) {
 				this.splitTriangles();
 			}
 		},
