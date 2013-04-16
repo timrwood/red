@@ -10,11 +10,8 @@ define(function (require) {
 			[0, 0, 0],
 			[255, 255, 255]
 		],
-		ANIMATION_TIME = 2000,
-		canvases = [
-			// require("./canvases/Pinstripe"),
-			require("./canvases/Triangle")
-		];
+		ANIMATION_TIME = 5000,
+		canvases = require("./CanvasList");
 
 	return require("rosy/base/Class").extend({
 		init : function () {
@@ -103,6 +100,7 @@ define(function (require) {
 			}
 
 			this.canvas.tick(canvasTime);
+			this.canvas.draw();
 			this.canvas.drawAtTime(canvasTime);
 			this.canvas.drawAtPercent(canvasTime / ANIMATION_TIME);
 			this.canvas.drawFromPercentToPercent(lastCanvasTime / ANIMATION_TIME, canvasTime / ANIMATION_TIME);
@@ -118,7 +116,7 @@ define(function (require) {
 		secondary : 0,
 		tertiary : 0,
 		colorPhase : -1,
-		isForeground : false,
+		isForeground : true,
 		changeColors : function () {
 			var classes = "",
 				primary, secondary, tertiary;

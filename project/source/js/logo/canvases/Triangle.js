@@ -2,7 +2,7 @@ define(function (require) {
 
 	"use strict";
 
-	var tris = [],
+	var triangles = [],
 		COS_60 = Math.cos(Math.PI / 6),
 		initial;
 
@@ -11,7 +11,7 @@ define(function (require) {
 		this.y = y;
 		this.r = radius;
 		this.up = isUp ? 1 : -1;
-		tris.push(this);
+		triangles.push(this);
 	}
 
 	Triangle.prototype = {
@@ -80,6 +80,7 @@ define(function (require) {
 		},
 
 		splitAt : function (x, y) {
+			var split;
 			// never split something so that it is smaller than 3 pixel radius
 			if (this.r < 3) {
 				return;
@@ -88,11 +89,13 @@ define(function (require) {
 				return;
 			}
 			if (!this.isSplit) {
-				return this.divide();
+				this.divide();
+				return this;
 			}
 			for (var i = 0; i < 4; i++) {
-				if (this[i].splitAt(x, y)) {
-					return this[i];
+				split = this[i].splitAt(x, y);
+				if (split) {
+					return split;
 				}
 			}
 		},
@@ -111,7 +114,7 @@ define(function (require) {
 
 	return require("../Canvas").extend({
 		prepare : function () {
-			tris = [];
+			this.removeTriangles();
 			initial = new Triangle(this.width / 2, this.height / 2, this.width * 2);
 			this.fillStyle(this.primaryHex()).fillRect(0, 0, this.width, this.height);
 		},
@@ -119,29 +122,44 @@ define(function (require) {
 		draw : function () {
 			var tri = initial.splitAt(this.randX(), this.randY());
 			if (tri) {
-				this.drawTriangle(tri);
+				this.drawTriangles(tri);
+			}
+		},
+
+		drawTriangles : function (tri) {
+			var i;
+			if (tri.isSplit) {
+				for (i = 0; i < 4; i++) {
+					this.drawTriangle(tri[i]);
+				}
 			}
 		},
 
 		drawTriangle : function (tri) {
-			console.log(tri);
-			//draw(this.x, this.y, this.r);
-			// var top = this.y + this.up * this.r,
-			// 	bot = this.y - this.up * this.r * 0.5,
-			// 	left = this.x + this.r * COS_60,
-			// 	right = this.x - this.r * COS_60;
+			var c = tri.center(),
+				l = tri.left(),
+				r = tri.right();
+			this.beginPath().fillStyle(this.primaryHex()).strokeStyle(this.secondaryHex())
+				.moveTo(~~c[0] + 0.5, ~~c[1] + 0.5)
+				.lineTo(~~l[0] + 0.5, ~~l[1] + 0.5)
+				.lineTo(~~r[0] + 0.5, ~~r[1] + 0.5)
+				.lineTo(~~c[0] + 0.5, ~~c[1] + 0.5)
+				.fill().stroke();
+		},
 
-			// c.fillStyle(getHex(this.x, this.y));
-			// c.beginPath();
-			// c.globalAlpha(0.5);
-			// c.moveTo(this.x, top);
-			// c.lineTo(left, bot);
-			// c.lineTo(right, bot);
-			// c.fill();
+		removeTriangles : function () {
+			var triangle;
+			while (triangles.length) {
+				triangle = triangles.pop();
+				triangle[0] = null;
+				triangle[1] = null;
+				triangle[2] = null;
+				triangle[3] = null;
+			}
 		},
 
 		destroy : function () {
-			tris = [];
+			this.removeTriangles();
 			this.sup();
 		}
 	});
