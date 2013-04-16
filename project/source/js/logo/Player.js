@@ -12,12 +12,14 @@ define(function (require) {
 		],
 		ANIMATION_TIME = 2000,
 		canvases = [
-			require("./canvases/Pinstripe")
+			// require("./canvases/Pinstripe"),
+			require("./canvases/Triangle")
 		];
 
 	return require("rosy/base/Class").extend({
 		init : function () {
 			this.start();
+			$(window).on('resize', this.resize);
 		},
 
 		fgCanvas : null,
@@ -53,8 +55,8 @@ define(function (require) {
 				width: this.bgw,
 				height: this.bgh
 			});
-			this.bgCtx.clearRect(0, 0, this.bgw, this.bgh);
-			this.fgCtx.clearRect(0, 0, this.fgw, this.fgh);
+			this.canvasTime = 0;
+			this.updateColors();
 		},
 
 		/*******************************
@@ -89,6 +91,11 @@ define(function (require) {
 			this.last += diff;
 			this.canvasTime += diff;
 
+			if (diff > ANIMATION_TIME) {
+				// this could happen due to the tab not being active for a while
+				diff = 0;
+			}
+
 			if (canvasTime > ANIMATION_TIME) {
 				this.nextCanvas();
 				canvasTime = this.canvasTime = diff;
@@ -107,23 +114,34 @@ define(function (require) {
 			Changing Colors and Foreground
 		*******************************/
 
+		primary : 0,
+		secondary : 0,
+		tertiary : 0,
 		colorPhase : -1,
 		isForeground : false,
 		changeColors : function () {
 			var classes = "",
-				primary, secondary, tertiary, i;
+				primary, secondary, tertiary;
 
 			this.colorPhase = (this.colorPhase + 1) % 6;
 
-			primary = 2 - (this.colorPhase % 3);
-			secondary = ~~(this.colorPhase / 2);
-			tertiary = ~~(((this.colorPhase + 3) % 6) / 2);
+			this.primary = primary = 2 - (this.colorPhase % 3);
+			this.secondary = secondary = ~~(this.colorPhase / 2);
+			this.tertiary = tertiary = ~~(((this.colorPhase + 3) % 6) / 2);
 
 			this.isForeground = !this.isForeground;
 			classes += this.isForeground ? 'is-fg bg-' : 'is-bg fg-';
 			classes += COLORS[primary];
 
 			$('body').removeClass().addClass(classes);
+			this.updateColors();
+		},
+
+		updateColors : function () {
+			var i;
+			if (!this.canvas) {
+				return;
+			}
 
 			if (this.isForeground) {
 				this.canvas.ctx = this.fgCtx;
@@ -136,8 +154,8 @@ define(function (require) {
 			}
 
 			for (i = 0; i < 3; i++) {
-				this.canvas.primary[i] = COLOR_ARRAYS[secondary][i];
-				this.canvas.secondary[i] = COLOR_ARRAYS[tertiary][i];
+				this.canvas.primary[i] = COLOR_ARRAYS[this.secondary][i];
+				this.canvas.secondary[i] = COLOR_ARRAYS[this.tertiary][i];
 			}
 			this.bgCtx.clearRect(0, 0, this.bgw, this.bgh);
 			this.fgCtx.clearRect(0, 0, this.fgw, this.fgh);

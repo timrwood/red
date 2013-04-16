@@ -52,10 +52,26 @@ define(function (require) {
 		},
 
 		/*******************************
+			Random
+		*******************************/
+
+		randX : function () {
+			return Math.random() * this.width;
+		},
+
+		randY : function () {
+			return Math.random() * this.height;
+		},
+
+		/*******************************
 			Tick
 		*******************************/
 
 		tick : function (ms) {
+
+		},
+
+		draw : function () {
 
 		},
 
