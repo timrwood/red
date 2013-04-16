@@ -4,7 +4,12 @@ define(function (require) {
 
 	var triangles = [],
 		COS_60 = Math.cos(Math.PI / 6),
-		initial;
+		initial,
+		ImageCache = require("../images/ImageCache"),
+		ImageData = require("../images/ImageData"),
+		color = require("../Color"),
+		vec4 = require("../math/vec4"),
+		SRC = '/project/static/img/test.jpg';
 
 	function Triangle(x, y, radius, isUp) {
 		this.x = x;
@@ -16,15 +21,24 @@ define(function (require) {
 
 	Triangle.prototype = {
 		center : function () {
-			return [this.x, this.y + this.up * this.r];
+			return [
+				~~(this.x),
+				~~(this.y + this.up * this.r)
+			];
 		},
 
 		right : function () {
-			return [this.x + this.r * COS_60, this.y - this.up * this.r * 0.5];
+			return [
+				~~(this.x + this.r * COS_60),
+				~~(this.y - this.up * this.r * 0.5)
+			];
 		},
 
 		left : function () {
-			return [this.x - this.r * COS_60, this.y - this.up * this.r * 0.5];
+			return [
+				~~(this.x - this.r * COS_60),
+				~~(this.y - this.up * this.r * 0.5)
+			];
 		},
 
 		top : function () {
@@ -112,11 +126,25 @@ define(function (require) {
 		}
 	};
 
+	// preload images
+	ImageCache.load(SRC);
+
 	return require("../Canvas").extend({
+		image : null,
+		init : function () {
+			this.image = new ImageData();
+			this.image.setSrc(SRC);
+			this.image.setScaleMode('cover');
+			this.sup();
+			this.triangleColor = vec4.create();
+		},
+
 		prepare : function () {
 			this.removeTriangles();
 			initial = new Triangle(this.width / 2, this.height / 2, this.width * 2);
 			this.fillStyle(this.primaryHex()).fillRect(0, 0, this.width, this.height);
+			this.image.setWidthAndHeight(this.width, this.height);
+			this.image.rebuild();
 		},
 
 		draw : function () {
@@ -135,16 +163,25 @@ define(function (require) {
 			}
 		},
 
+		triangleColor : null,
 		drawTriangle : function (tri) {
 			var c = tri.center(),
 				l = tri.left(),
 				r = tri.right();
-			this.beginPath().fillStyle(this.primaryHex()).strokeStyle(this.secondaryHex())
+			this.beginPath().fillStyle(this.getTriangleHex(c, l, r, tri.x, tri.y)).strokeStyle(this.secondaryHex())
 				.moveTo(~~c[0] + 0.5, ~~c[1] + 0.5)
 				.lineTo(~~l[0] + 0.5, ~~l[1] + 0.5)
 				.lineTo(~~r[0] + 0.5, ~~r[1] + 0.5)
 				.lineTo(~~c[0] + 0.5, ~~c[1] + 0.5)
-				.fill().stroke();
+				.fill();
+		},
+
+		getTriangleHex : function (c, l, r, x, y) {
+			vec4.copy(this.triangleColor, this.image.getPixelClamped(c[0], c[1]));
+			vec4.lerp(this.triangleColor, this.triangleColor, this.image.getPixelClamped(l[0], l[1]), 1 / 2);
+			vec4.lerp(this.triangleColor, this.triangleColor, this.image.getPixelClamped(r[0], r[1]), 1 / 3);
+			vec4.lerp(this.triangleColor, this.triangleColor, this.image.getPixelClamped(x, y), 1 / 4);
+			return color.hex.apply(color, this.triangleColor);
 		},
 
 		removeTriangles : function () {

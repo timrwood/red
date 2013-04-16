@@ -10,14 +10,10 @@ define(function (require) {
 			[0, 0, 0],
 			[255, 255, 255]
 		],
-		ANIMATION_TIME = 5000,
+		ANIMATION_TIME = 10000,
 		canvases = require("./CanvasList"),
-		ImageCache = require("./images/ImageCache");
 
-	ImageCache.load('/project/static/img/test.jpg');
-	setTimeout(function(){
-		ImageCache.load('/project/static/img/test.jpg');
-	}, 3000);
+		DEBUG = !true;
 
 	return require("rosy/base/Class").extend({
 		init : function () {
@@ -111,7 +107,11 @@ define(function (require) {
 			this.canvas.drawAtPercent(canvasTime / ANIMATION_TIME);
 			this.canvas.drawFromPercentToPercent(lastCanvasTime / ANIMATION_TIME, canvasTime / ANIMATION_TIME);
 
-			raf(this.tick);
+			if (DEBUG) {
+				this.setTimeout(this.tick, 500);
+			} else {
+				raf(this.tick);
+			}
 		},
 
 		/*******************************
