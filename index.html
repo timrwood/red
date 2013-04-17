@@ -34,11 +34,11 @@
 				<use class="if-bg fg-color" xlink:href="#inner" fill="#fff"/>
 			</svg>
 		</div>
-		<script src="/project/static/js/libs/require.js"></script>
-		<script src="/project/static/js/config.js"></script>
+		<script src="/project/source/js/libs/require.js"></script>
+		<script src="/project/source/js/config.js"></script>
 		<script>
 			require.config({
-				baseUrl : "/project/static/js",
+				baseUrl : "/project/source/js",
 				urlArgs : "cacheBust=" + (new Date()).getTime()
 			});
 			require(["logo/Site"], function (Site) {
