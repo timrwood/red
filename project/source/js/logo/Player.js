@@ -149,6 +149,11 @@ define(function (require) {
 				return;
 			}
 
+			this.canvas.fgw = this.fgw;
+			this.canvas.fgh = this.fgh;
+			this.canvas.bgw = this.bgw;
+			this.canvas.bgh = this.bgh;
+
 			if (this.isForeground) {
 				this.canvas.ctx = this.fgCtx;
 				this.canvas.width = this.fgw;

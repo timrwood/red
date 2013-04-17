@@ -61,7 +61,7 @@ body {
 
 @include logo(200px);
 
-@for $i from 3 through 12 {
+@for $i from 3 through 18 {
 	@media only screen and (min-width : $i * 100px) {
 		@include logo(($i - 1) * 100px);
 	}
