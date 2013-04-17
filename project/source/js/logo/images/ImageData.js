@@ -99,7 +99,7 @@ define(function (require) {
 			var i = ~~x,
 				data = this.pixels && this.pixels.data;
 			if (this.pixels) {
-				i += (this.pixels.width * (~~y)) * 4;
+				i += (this.pixels.width * (~~y));
 			}
 			i *= 4;
 			if (!data || data.length < i + 4) {
