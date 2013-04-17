@@ -66,6 +66,7 @@ define(function (require) {
 		canvasIndex : 0,
 		nextCanvas : function () {
 			this.canvasIndex = (this.canvasIndex + 1) % canvases.length;
+			this.canvasIndex = Math.floor(Math.random() * canvases.length);
 
 			var Canvas = canvases[this.canvasIndex];
 
