@@ -34,6 +34,7 @@ body {
 		@extend %position-zero;
 		width: 100%;
 		height: 100%;
+		@include opacity(0.8);
 	}
 
 	canvas {
@@ -49,6 +50,7 @@ body {
 	right: 0;
 	bottom: 0;
 	position: fixed;
+	background: #000;
 
 	canvas {
 		position: absolute;
@@ -75,16 +77,16 @@ body {
 }
 .fg-red .fg-color,
 .bg-red .bg-color {
-	fill: red;
-	background: red;
+	// fill: red;
+	// background: red;
 }
 .fg-white .fg-color,
 .bg-white .bg-color {
-	fill: white;
-	background: white;
+	// fill: white;
+	// background: white;
 }
 .fg-black .fg-color,
 .bg-black .bg-color {
-	fill: black;
-	background: black;
+	// fill: black;
+	// background: black;
 }

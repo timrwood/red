@@ -26,27 +26,5 @@ Requires:
 		"caboose/reset",
 		"caboose/exports";
 
-// Rosy Imports
-// For use with https://github.com/ff0000/rosy
-// @import "rosy/custom-form-field/custom-form-field";
-// @import "rosy/ios-page-control/page-control";
-
-// Import project mixins
-@import "mixins/mixins";
-
-// Import project placeholders
-@import "placeholders/placeholders";
-
-// Import fonts
-// @import "fonts/proxima-nova"
-
 // Import project base files
-@import "base/header",
-		"base/body",
-		"base/footer";
-
-// Import shared modules
-// @import "modules/feature";
-
-// Import page views
-@import "views/home";
+@import "base/body";

@@ -135,6 +135,7 @@ define(function (require) {
 			this.tertiary = tertiary = ~~(((this.colorPhase + 3) % 6) / 2);
 
 			this.isForeground = !this.isForeground;
+			this.isForeground = true;
 			classes += this.isForeground ? 'is-fg bg-' : 'is-bg fg-';
 			classes += COLORS[primary];
 

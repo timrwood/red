@@ -1,17 +1,8 @@
 require.config({
 
 	paths : {
-		"$" : "//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min",
-		"CFInstall" : "//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min",
-		"ChromeFrame" : "rosy/modules/google-chrome-frame/ChromeFrame",
-		"Cookies" : "libs/cookies",
-		"Handlebars" : "libs/handlebars",
-		"zynga" : "libs/zynga",
-		"templates" : "../../templates",
-		"json" : "libs/json3",
-		"$plugin" : "libs/plugins/amd/jquery-plugin",
-		"jsonFile" : "libs/plugins/amd/jsonFile",
-		"text" : "libs/plugins/amd/text"
+		"$" : "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min",
+		"box2d" : "libs/box2dweb"
 	},
 
 	waitSeconds : 15,
@@ -21,17 +12,8 @@ require.config({
 			exports : "jQuery"
 		},
 
-		"zynga/Scroller" : {
-			exports : "Scroller",
-			deps : ["zynga/Animate"]
-		},
-
-		"CFInstall" : {
-			exports : "CFInstall"
-		},
-
-		"Handlebars" : {
-			exports : "Handlebars"
+		"box2d" : {
+			exports : "Box2D"
 		}
 	}
 });
