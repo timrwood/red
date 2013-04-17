@@ -70,6 +70,11 @@ define(function (require) {
 			return color.hex.apply(color, this.gradientMap(c));
 		},
 
+		gradientMapRgba : function (c, alpha) {
+			var map = this.gradientMap(c);
+			return color.rgba(map[0], map[1], map[2], alpha);
+		},
+
 		gradientMap3 : function (c) {
 			var percent = (c[0] + c[1] + c[2]) / (256 * 3);
 			if (percent > 0.5) {

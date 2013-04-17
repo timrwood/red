@@ -96,8 +96,12 @@ define(function (require) {
 
 		pixels : null,
 		getPixel : function (x, y) {
-			var i = (~~x + (this.pixels.width * (~~y))) * 4,
+			var i = ~~x,
 				data = this.pixels && this.pixels.data;
+			if (this.pixels) {
+				i += (this.pixels.width * (~~y)) * 4;
+			}
+			i *= 4;
 			if (!data || data.length < i + 4) {
 				return [0, 0, 0, 0];
 			}
