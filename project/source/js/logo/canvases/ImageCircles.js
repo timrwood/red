@@ -35,12 +35,9 @@ define(function (require) {
 
 		drawCircle : function (r) {
 			var x = this.randXCenter(),
-				y = this.randY(),
-				pixel = this.image.getPixelClamped(x, y);//,
-			// 	grad = this.createRadialGradient(x, y, r * 0.5, x, y, r);
-			// grad.addColorStop(0, this.gradientMapHex(pixel));
-			// grad.addColorStop(1, this.gradientMapRgba(pixel, 0));
-			this.fillStyle(this.gradientMapHex(pixel)).beginPath().moveTo(x, y);
+				y = this.randY();
+			this.fillStyle(this.gradientMapHex(this.image.getPixelClamped(x, y)));
+			this.beginPath().moveTo(x, y);
 			this.arc(x, y, r, 0, Math.PI * 2).fill();
 		}
 	});
