@@ -10,7 +10,7 @@ define(function (require) {
 			[0, 0, 0],
 			[255, 255, 255]
 		],
-		ANIMATION_TIME = 3000,
+		ANIMATION_TIME = 5000,
 		canvases = require("./CanvasList"),
 
 		DEBUG = false;
@@ -135,7 +135,7 @@ define(function (require) {
 			this.tertiary = tertiary = ~~(((this.colorPhase + 3) % 6) / 2);
 
 			this.isForeground = !this.isForeground;
-			this.isForeground = true;
+			// this.isForeground = false;
 			classes += this.isForeground ? 'is-fg bg-' : 'is-bg fg-';
 			classes += COLORS[primary];
 
@@ -153,6 +153,7 @@ define(function (require) {
 			this.canvas.fgh = this.fgh;
 			this.canvas.bgw = this.bgw;
 			this.canvas.bgh = this.bgh;
+			this.canvas.isForeground = this.isForeground;
 
 			if (this.isForeground) {
 				this.canvas.ctx = this.fgCtx;
@@ -167,6 +168,7 @@ define(function (require) {
 			for (i = 0; i < 3; i++) {
 				this.canvas.primary[i] = COLOR_ARRAYS[this.secondary][i];
 				this.canvas.secondary[i] = COLOR_ARRAYS[this.tertiary][i];
+				this.canvas.tertiary[i] = COLOR_ARRAYS[this.primary][i];
 			}
 			this.bgCtx.clearRect(0, 0, this.bgw, this.bgh);
 			this.fgCtx.clearRect(0, 0, this.fgw, this.fgh);

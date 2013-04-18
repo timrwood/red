@@ -17,6 +17,7 @@ define(function (require) {
 		init : function () {
 			this.primary = vec4.create();
 			this.secondary = vec4.create();
+			this.tertiary = vec4.create();
 		},
 
 		destroy : function () {
@@ -41,12 +42,20 @@ define(function (require) {
 			return color.hex.apply(color, this.secondary);
 		},
 
+		tertiaryHex : function () {
+			return color.hex.apply(color, this.tertiary);
+		},
+
 		primaryRgba : function (alpha) {
 			return color.rgba(this.primary[0], this.primary[1], this.primary[2], alpha);
 		},
 
 		secondaryRgba : function (alpha) {
 			return color.rgba(this.secondary[0], this.secondary[1], this.secondary[2], alpha);
+		},
+
+		tertiaryRgba : function (alpha) {
+			return color.rgba(this.tertiary[0], this.tertiary[1], this.tertiary[2], alpha);
 		},
 
 		gradientMap : function (c) {
