@@ -49,4 +49,21 @@ module.exports = function (grunt) {
 		}
 	}());
 
+	grunt.config.set("compass.dev", {
+		http_path: "",
+		sass_dir: "scss/project",
+		css_dir: "css",
+		additional_import_paths: ["scss/caboose"]
+	});
+	grunt.config.set("compass.prod", {
+		http_path: "<config:compass.dev.http_path>",
+		sass_dir: "<config:compass.dev.sass_dir>",
+		css_dir: "<config:compass.dev.css_dir>",
+		additional_import_paths: "<config:compass.dev.additional_import_paths>"
+	});
+	grunt.config.set("modernizr", {
+		devFile : "js/libs/modernizr.js",
+		outputFile : "js/libs/modernizr.min.js"
+	});
+
 };

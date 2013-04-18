@@ -9,7 +9,7 @@ define(function (require) {
 		ImageData = require("../images/ImageData"),
 		color = require("../Color"),
 		vec4 = require("../math/vec4"),
-		SRC = '/project/static/img/tesla.jpg';
+		SRC = 'img/tesla.jpg';
 
 	function Triangle(x, y, radius, isUp) {
 		this.x = x;

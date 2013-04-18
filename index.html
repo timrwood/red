@@ -6,7 +6,7 @@
 		<title>RED Canvas Logo</title>
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="project/static/css/style.css" />
+		<link rel="stylesheet" href="css/style.css" />
 	</head>
 	<body>
 		<div id="background" class="bg-color">
@@ -35,11 +35,11 @@
 				<use class="if-bg fg-color" xlink:href="#inner" fill="#fff"></use>
 			</svg>
 		</div>
-		<script src="project/source/js/libs/require.js"></script>
-		<script src="project/source/js/config.js"></script>
+		<script src="js/libs/require.js"></script>
+		<script src="js/config.js"></script>
 		<script>
 			require.config({
-				baseUrl : "project/source/js",
+				baseUrl : "js",
 				urlArgs : "cacheBust=" + (new Date()).getTime()
 			});
 			require(["logo/Site"], function (Site) {

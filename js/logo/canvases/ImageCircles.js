@@ -4,7 +4,7 @@ define(function (require) {
 
 	var ImageCache = require("../images/ImageCache"),
 		ImageData = require("../images/ImageData"),
-		SRC = '/project/static/img/tesla.jpg',
+		SRC = 'img/tesla.jpg',
 		TAU = Math.PI * 2;
 
 	// preload images
