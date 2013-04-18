@@ -142,7 +142,7 @@ define(function (require) {
 		prepare : function () {
 			this.removeTriangles();
 			initial = new Triangle(this.width / 2, this.height / 2, this.width * 2);
-			this.fillStyle(this.primaryHex()).fillRect(0, 0, this.width, this.height);
+			this.fillStyle(this.primaryHex).fillRect(0, 0, this.width, this.height);
 			this.image.setWidthAndHeight(this.width, this.height);
 			this.image.rebuild();
 		},
@@ -175,7 +175,7 @@ define(function (require) {
 			var c = tri.center(),
 				l = tri.left(),
 				r = tri.right();
-			this.beginPath().fillStyle(this.getTriangleHex(c, l, r, tri.x, tri.y)).strokeStyle(this.secondaryHex())
+			this.beginPath().fillStyle(this.getTriangleHex(c, l, r, tri.x, tri.y))
 				.moveTo(c[0], c[1])
 				.lineTo(l[0], l[1])
 				.lineTo(r[0], r[1])

@@ -18,6 +18,7 @@ define(function (require) {
 			this.primary = vec4.create();
 			this.secondary = vec4.create();
 			this.tertiary = vec4.create();
+			this._gradientMapArray = vec4.create();
 		},
 
 		destroy : function () {
@@ -34,17 +35,15 @@ define(function (require) {
 		primary : null,
 		secondary : null,
 
-		primaryHex : function () {
-			return color.hex.apply(color, this.primary);
+		updateColor : function () {
+			this.primaryHex = color.hex.apply(color, this.primary);
+			this.secondaryHex = color.hex.apply(color, this.secondary);
+			this.tertiaryHex = color.hex.apply(color, this.tertiary);
 		},
 
-		secondaryHex : function () {
-			return color.hex.apply(color, this.secondary);
-		},
-
-		tertiaryHex : function () {
-			return color.hex.apply(color, this.tertiary);
-		},
+		primaryHex : null,
+		secondaryHex : null,
+		tertiaryHex : null,
 
 		primaryRgba : function (alpha) {
 			return color.rgba(this.primary[0], this.primary[1], this.primary[2], alpha);
@@ -58,6 +57,7 @@ define(function (require) {
 			return color.rgba(this.tertiary[0], this.tertiary[1], this.tertiary[2], alpha);
 		},
 
+		_gradientMapArray : null,
 		gradientMap : function (c) {
 			var primaryLength = vec4.sqrLen(this.primary),
 				secondaryLength = vec4.sqrLen(this.secondary),
@@ -72,7 +72,7 @@ define(function (require) {
 				dark = this.primary;
 			}
 
-			return vec4.lerp([], light, dark, percent);
+			return vec4.lerp(this._gradientMapArray, light, dark, percent);
 		},
 
 		gradientMapHex : function (c) {
@@ -87,9 +87,9 @@ define(function (require) {
 		gradientMap3 : function (c) {
 			var percent = (c[0] + c[1] + c[2]) / (256 * 3);
 			if (percent > 0.5) {
-				return vec4.lerp([], RED, WHITE, (percent - 0.5) * 2);
+				return vec4.lerp(this._gradientMapArray, RED, WHITE, (percent - 0.5) * 2);
 			}
-			return vec4.lerp([], BLACK, RED, percent * 2);
+			return vec4.lerp(this._gradientMapArray, BLACK, RED, percent * 2);
 		},
 
 		gradientMap3Hex : function (c) {

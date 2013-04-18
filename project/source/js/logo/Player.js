@@ -10,7 +10,7 @@ define(function (require) {
 			[0, 0, 0],
 			[255, 255, 255]
 		],
-		ANIMATION_TIME = 5000,
+		ANIMATION_TIME = 10000,
 		canvases = require("./CanvasList"),
 
 		DEBUG = false;
@@ -170,6 +170,7 @@ define(function (require) {
 				this.canvas.secondary[i] = COLOR_ARRAYS[this.tertiary][i];
 				this.canvas.tertiary[i] = COLOR_ARRAYS[this.primary][i];
 			}
+			this.canvas.updateColor();
 			this.bgCtx.clearRect(0, 0, this.bgw, this.bgh);
 			this.fgCtx.clearRect(0, 0, this.fgw, this.fgh);
 

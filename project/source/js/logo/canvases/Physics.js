@@ -229,7 +229,7 @@ define(function (require) {
 			this.fillRect(0, 0, this.width, this.height);
 			this.restore();
 			// world.DrawDebugData();
-			this.fillStyle(this.secondaryHex());
+			this.fillStyle(this.secondaryHex);
 			this.drawBalls();
 		}
 	});

@@ -4,7 +4,7 @@ define(function (require) {
 
 	return require("../Canvas").extend({
 		prepare : function () {
-			this.fillStyle(this.primaryHex()).strokeStyle(this.secondaryHex());
+			this.fillStyle(this.primaryHex).strokeStyle(this.secondaryHex);
 		},
 
 		drawAtPercent : function (t) {

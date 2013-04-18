@@ -3,12 +3,10 @@ define(function (require) {
 	"use strict";
 
 	return require("../Canvas").extend({
-		phex : null,
-		shex : null,
 		prepare : function () {
 			this.setTransform(1, 0, 0, 1, this.width / 2, this.height / 2);
-			this.fillStyle(this.primaryHex()).fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
-			this.fillStyle(this.primaryRgba(0.1)).strokeStyle(this.secondaryHex());
+			this.fillStyle(this.primaryHex).fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+			this.fillStyle(this.primaryRgba(0.1)).strokeStyle(this.secondaryHex);
 			this.t = 0;
 		},
 

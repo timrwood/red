@@ -2,7 +2,8 @@ define(function (require) {
 
 	"use strict";
 
-	var ImageCache = require("./ImageCache");
+	var ImageCache = require("./ImageCache"),
+		vec4 = require("../math/vec4");
 
 	return require("rosy/base/Class").extend({
 		canvas : null,
@@ -10,6 +11,7 @@ define(function (require) {
 		init : function () {
 			this.canvas = document.createElement('canvas');
 			this.ctx = this.canvas.getContext('2d');
+			this._pixel = vec4.create();
 		},
 
 		width : 0,
@@ -95,6 +97,7 @@ define(function (require) {
 		},
 
 		pixels : null,
+		_pixel : null,
 		getPixel : function (x, y) {
 			var i = ~~x,
 				data = this.pixels && this.pixels.data;
@@ -103,9 +106,18 @@ define(function (require) {
 			}
 			i *= 4;
 			if (!data || data.length < i + 4) {
-				return [0, 0, 0, 0];
+				this._pixel[0] = 0;
+				this._pixel[1] = 0;
+				this._pixel[2] = 0;
+				this._pixel[3] = 0;
+			} else {
+				this._pixel[0] = data[i];
+				this._pixel[1] = data[i + 1];
+				this._pixel[2] = data[i + 2];
+				this._pixel[3] = data[i + 3];
 			}
-			return [data[i], data[i + 1], data[i + 2], data[i + 3]];
+
+			return this._pixel;
 		},
 
 		getPixelClamped : function (x, y) {
