@@ -7,6 +7,9 @@ define(function (require) {
 	return require("rosy/base/Class").extend({
 		init : function () {
 			this.player = new Player();
+			setTimeout(function () {
+				window.scrollTo(0, 1);
+			}, 0);
 		}
 	});
 });
