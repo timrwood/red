@@ -23,8 +23,7 @@ Requires:
 // Import Caboose
 // caboose/reset and caboose/exports are optional includes
 @import "caboose",
-		"caboose/reset",
-		"caboose/exports";
+		"caboose/reset";
 
 // Import project base files
 @import "base/body";

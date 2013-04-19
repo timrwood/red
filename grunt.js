@@ -59,7 +59,10 @@ module.exports = function (grunt) {
 		http_path: "<config:compass.dev.http_path>",
 		sass_dir: "<config:compass.dev.sass_dir>",
 		css_dir: "<config:compass.dev.css_dir>",
-		additional_import_paths: "<config:compass.dev.additional_import_paths>"
+		additional_import_paths: "<config:compass.dev.additional_import_paths>",
+		output_style: ":compressed",
+		line_comments: false,
+		force_compile: true
 	});
 	grunt.config.set("modernizr", {
 		devFile : "js/libs/modernizr.js",
