@@ -50,8 +50,14 @@
 		<script src="js/config.js"></script>
 		<script>
 			require.config({
-				baseUrl : "js",
+				baseUrl : "js"
+			});
+			require.config(~location.search.indexOf('debug') ? {
 				urlArgs : "cacheBust=" + (new Date()).getTime()
+			} : {
+				paths : {
+					"logo/Site" : "site.min"
+				}
 			});
 			require(["logo/Site"], function (Site) {
 				new Site();

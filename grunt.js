@@ -65,5 +65,15 @@ module.exports = function (grunt) {
 		devFile : "js/libs/modernizr.js",
 		outputFile : "js/libs/modernizr.min.js"
 	});
-
+	grunt.config.set("requirejs.desktop", {
+		options : {
+			mainConfigFile : "js/config.js",
+			paths : {
+				"jquery": "empty:"
+			},
+			optimize : "uglify",
+			out : "js/site.min.js",
+			name : "logo/Site"
+		}
+	});
 };
