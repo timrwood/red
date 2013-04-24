@@ -1,7 +1,7 @@
 require.config({
 
 	paths : {
-		"$" : "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min",
+		"$" : "libs/jquery",
 		"box2d" : "libs/box2dweb"
 	},
 
